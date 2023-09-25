@@ -11,7 +11,7 @@ class DatabaseManager:
 
         self.connect_db.execute("""
                     CREATE TABLE IF NOT EXISTS auto(
-                    id INTEGER PRIMARY KEY,
+                    rowid INTEGER PRIMARY KEY,
                     brand TEXT,
                     model TEXT,
                     year TEXT,
@@ -20,7 +20,8 @@ class DatabaseManager:
                     license INTEGER DEFAULT 0,
                     full_name TEXT,
                     phone TEXT,
-                    monthly_payment TEXT);
+                    monthly_payment TEXT,
+                    date NULL);
                                 """)
             
         self.connect_db.commit()
@@ -33,7 +34,7 @@ class DatabaseManager:
 db_manager: DatabaseManager = DatabaseManager()
 
 cursor = db_manager.cursor
-query = "SELECT rowid FROM license"
+query = "DELETE FROM auto WHERE ID == 1"
 
 cursor.execute(query)
 print(cursor.fetchall())
