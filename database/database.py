@@ -27,6 +27,17 @@ class DatabaseManager:
         self.connect_db.commit()
 
 
+        self.connect_db.execute("""
+                                CREATE TABLE IF NOT EXISTS finance(
+                                user_id INTEGER,
+                                month_count INTEGER,
+                                date_payment INTEGER,
+                                reg_payment INTEGER
+                                );
+                                """)
+        self.connect_db.commit()
+
+
     async def close_connection(self) -> None:
 
         self.connect_db.close()

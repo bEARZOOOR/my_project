@@ -72,35 +72,35 @@ license_actions_kb: InlineKeyboardMarkup = InlineKeyboardMarkup(
 )
 
 edite_brand_but: InlineKeyboardButton = InlineKeyboardButton(
-    text="Редактировать бренд",
+    text="Ред. бренд",
     callback_data="edite_brand_but_pressed"
 )
 edite_model_but: InlineKeyboardButton = InlineKeyboardButton(
-    text="Редактировать модель",
+    text="Ред. модель",
     callback_data="edite_model_but_pressed"
 )
 edite_year_but: InlineKeyboardButton = InlineKeyboardButton(
-    text="Редактировать год",
+    text="Ред. год",
     callback_data="edite_year_but_pressed"
 )
 edite_color_but: InlineKeyboardButton = InlineKeyboardButton(
-    text="Редактировать цвет",
+    text="Ред. цвет",
     callback_data="edite_color_but_pressed"
 )
 edite_license_numb_but: InlineKeyboardButton = InlineKeyboardButton(
-    text="Редактировать гос.номер",
+    text="Ред. гос.номер",
     callback_data="edite_lic_numb_but_pressed"
 )
 edite_full_name_but: InlineKeyboardButton = InlineKeyboardButton(
-    text="Редактировать ФИО",
+    text="Ред. ФИО",
     callback_data="edite_full_name_but_pressed"
 )
 edite_phone_but: InlineKeyboardButton = InlineKeyboardButton(
-    text="Редактировать телефон",
+    text="Ред. телефон",
     callback_data="edite_phone_but_pressed"
 )
 edite_monthly_payment_but: InlineKeyboardButton = InlineKeyboardButton(
-    text="Редактировать ежем.платеж",
+    text="Ред. ежем.платеж",
     callback_data="edite_monthly_pay_but_pressed"
 )
 
