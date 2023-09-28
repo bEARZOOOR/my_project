@@ -6,7 +6,7 @@ from aiogram.types import Message
 from keyboards.keyboards import title_kb, license_actions_kb
 from aiogram.types import CallbackQuery
 from database.database import DatabaseManager
-from datetime import datetime
+import datetime
 
 
 db_manager: DatabaseManager = DatabaseManager()
@@ -42,7 +42,7 @@ async def process_check_info_lic(callback:CallbackQuery):
                     f'Гос.номер: {license_numb}\n'
                     f'Лицензия: {license_filter(int(license))}\n'
                     f'Время оформления: {date}\n'
-                    "Данные по клиенту: \n"
+                    "Данные по клиенту: \n\n"
                     f'ФИО: {full_name}\n'
                     f'Телефон: {phone}\n'
                     f'Ежем.платеж: {monthly_payment}\n'
@@ -110,7 +110,7 @@ async def process_fsm_license_over(message: Message, state: FSMContext):
 
     values = await state.get_data()
     edite_values = tuple(values.values())
-    now = datetime.now()
+    now = datetime.datetime.now()
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
     query = """
     UPDATE auto SET full_name = '{}',
@@ -120,9 +120,25 @@ async def process_fsm_license_over(message: Message, state: FSMContext):
                     date = '{}'
                     WHERE rowid == '{}'
     """.format(edite_values[1], edite_values[2], edite_values[3], dt_string, edite_values[0])
-
     db_manager.connect_db.execute(query)
     db_manager.connect_db.commit()
+
+    day = datetime.datetime.now().day
+    now = datetime.datetime.now()
+    for i in range(1, 61):
+        days_31 = datetime.timedelta(days=31*i)
+        next_month = (now+days_31).strftime("{}/%m/%y").format(day)
+        values = edite_values[0], i, next_month
+        edite_values = tuple(values)
+        query = """
+        INSERT INTO finance (
+        user_id,
+        month_count,
+        date_payment)
+        VALUES (?, ?, ?);
+        """
+        db_manager.connect_db.execute(query,edite_values)
+        db_manager.connect_db.commit()
 
     await state.clear()
 
@@ -152,7 +168,7 @@ async def process_fsm_rm_license_over(message: Message, state: FSMContext):
 
     values = await state.get_data()
     edite_values = tuple(values.values())
-    now = datetime. now()
+    now = datetime.datetime.now()
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
     query = """
     UPDATE auto SET monthly_payment = NULL,
@@ -160,14 +176,21 @@ async def process_fsm_rm_license_over(message: Message, state: FSMContext):
                     date = '{}'
                     WHERE rowid == '{}'
     """.format(dt_string, edite_values[0])
-
+    db_manager.connect_db.execute(query)
+    db_manager.connect_db.commit()
+    query = """
+    DELETE FROM finance
+    WHERE user_id = "{}"
+    """.format(edite_values[0])
     db_manager.connect_db.execute(query)
     db_manager.connect_db.commit()
 
 
     await state.clear()
 
-    await message.answer(text='лицензия авто с ID: {} удалена {}!\n\n'.format(edite_values[0], dt_string))
+    await message.answer(text='Лицензия авто с ID: {} удалена!\n'
+                              'Дата удаления: {}'.format(edite_values[0], dt_string)
+                              )
 
 
 

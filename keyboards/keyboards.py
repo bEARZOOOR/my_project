@@ -71,6 +71,7 @@ license_actions_kb: InlineKeyboardMarkup = InlineKeyboardMarkup(
                      [rm_lic_but]]
 )
 
+# Кнопки редактора
 edite_brand_but: InlineKeyboardButton = InlineKeyboardButton(
     text="Ред. бренд",
     callback_data="edite_brand_but_pressed"
@@ -103,10 +104,24 @@ edite_monthly_payment_but: InlineKeyboardButton = InlineKeyboardButton(
     text="Ред. ежем.платеж",
     callback_data="edite_monthly_pay_but_pressed"
 )
-
+# Кб ред.
 edite_kb: InlineKeyboardMarkup = InlineKeyboardMarkup(
     inline_keyboard=[[edite_brand_but, edite_model_but],
                      [edite_year_but, edite_color_but],
                      [edite_license_numb_but, edite_full_name_but],
                      [edite_phone_but, edite_monthly_payment_but]]
+)
+
+show_payment_but: InlineKeyboardButton = InlineKeyboardButton(
+    text="Статистика платежей",
+    callback_data="show_payment_but_pressed"
+)
+
+reg_payment_but: InlineKeyboardButton =  InlineKeyboardButton(
+    text="Регистрация платежа",
+    callback_data="reg_payment_but_pressed"
+)
+
+finance_kb: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    inline_keyboard=[[show_payment_but, reg_payment_but]]
 )

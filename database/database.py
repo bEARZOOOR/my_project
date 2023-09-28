@@ -32,7 +32,7 @@ class DatabaseManager:
                                 user_id INTEGER,
                                 month_count INTEGER,
                                 date_payment INTEGER,
-                                reg_payment INTEGER
+                                reg_payment INTEGER DEFAULT 0
                                 );
                                 """)
         self.connect_db.commit()
@@ -44,9 +44,19 @@ class DatabaseManager:
 '''
 db_manager: DatabaseManager = DatabaseManager()
 
-cursor = db_manager.cursor
-query = "DELETE FROM auto WHERE ID == 1"
+cursor = db_manager.connect_db.cursor()
+query = """
+    SELECT user_id,
+           month_count,
+           date_payment,
+           reg_payment
+           FROM finance WHERE user_id = 1
+"""
+filter = lambda x: "Да" if x == 1 else "нет"
+res = ""
+j = cursor.execute(query).fetchall()
+for i in j:
+    res += f"месяц: {str(i[1])} | дата: {str(i[2])} | оплата: {filter(str(i[3]))}\n"
 
-cursor.execute(query)
-print(cursor.fetchall())
+print(res)
 '''
