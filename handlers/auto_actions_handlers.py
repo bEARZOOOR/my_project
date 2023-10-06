@@ -293,7 +293,7 @@ async def process_edite_year_over(message: Message, state: FSMContext):
     values = await state.get_data()
     edite_values = tuple(values.values())
     query = """
-    UPDATE auto SET year = "{}" ###
+    UPDATE auto SET year = "{}"
     WHERE rowid == "{}"
     """.format(edite_values[1], edite_values[0])
     db_manager.connect_db.execute(query)

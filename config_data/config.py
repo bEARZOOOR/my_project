@@ -19,5 +19,5 @@ def load_config(path: str or None = None) -> Config:
     env.read_env(path)
     return Config(tg_bot=TelegramBot(
         token=env("BOT_TOKEN"),
-        admin_ids=list(map(int, env.list("ADMIN_IDS")))
+        admin_ids=list(map(int, env.list('ADMIN_IDS')))
     ))
