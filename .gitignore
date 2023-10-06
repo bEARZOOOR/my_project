@@ -1,6 +1,6 @@
 .env
-
 .mypy_cache/
 .vscode/
 .venv/
 __pycache__/
+/database/car.db
