@@ -3,12 +3,10 @@ from config_data.config import load_config, Config
 from database.database import DatabaseManager
 
 import datetime
-import sqlite3
 import asyncio
 
 
 config: Config = load_config()
-
 bot: Bot = Bot(token=config.tg_bot.token,
                    parse_mode="html")
 db_manager: DatabaseManager = DatabaseManager()
@@ -32,15 +30,13 @@ async def take_date(sec:int = 24*60*60):
 async def take_dates_from_db(sec:int = 24*60*60): # проверка на совпадение
     global date_payment
     while True:
-        db_path = "./database/car.db"
-        with sqlite3.connect(db_path) as connect_db:
-            cursor = connect_db.cursor()
-            query = """
+        cursor = db_manager.connect_db.cursor()
+        query = """
                 SELECT date_payment
                 FROM finance
                 WHERE reg_payment == 0
                 """
-            date_payment = cursor.execute(query).fetchall()
+        date_payment = cursor.execute(query).fetchall()
         await asyncio.sleep(sec)
 
 
